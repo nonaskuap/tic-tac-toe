@@ -1,124 +1,139 @@
 const PLAYER1 = 'X', PLAYER2 = 'O';
+let index;
 let turn = 0;
 let winner = '';
 
-const btn1 = document.querySelector('#btn1');
-const btn2 = document.querySelector('#btn2');
-const btn3 = document.querySelector('#btn3');
+const gridArray = [
+  document.querySelector('#btn0'),
+  document.querySelector('#btn1'),
+  document.querySelector('#btn2'),
+  document.querySelector('#btn3'),
+  document.querySelector('#btn4'),
+  document.querySelector('#btn5'),
+  document.querySelector('#btn6'),
+  document.querySelector('#btn7'),
+  document.querySelector('#btn8')
+];
 
-const btn4 = document.querySelector('#btn4');
-const btn5 = document.querySelector('#btn5');
-const btn6 = document.querySelector('#btn6');
+// relative position to current button
+const up = () => index - 3;
+const up2 = () => index - 6;
+const down = () => index + 3;
+const down2 = () => index + 6;
+const right = () => index + 1;
+const right2 = () => index + 2;
+const left = () => index - 1;
+const left2 = () => index - 2;
 
-const btn7 = document.querySelector('#btn7');
-const btn8 = document.querySelector('#btn8');
-const btn9 = document.querySelector('#btn9');
+const diagUpRight = () => index - 2;
+const diagUpRight2 = () => index - 4;
+const diagDownRight = () => index + 4;
+const diagDownRight2 = () => index + 8;
+const diagUpLeft = () => index - 4;
+const diagUpLeft2 = () => index - 8;
+const diagDownLeft = () => index + 2;
+const diagDownLeft2 = () => index + 4;
 
-// function to display X or O
-function displaySymbol(button) {
-  turn % 2 === 0 ? button.innerHTML = PLAYER1 
-    : button.innerHTML = PLAYER2;
-  
-  turn++;
-}
+
 
 // function to check row and column for win condidtion
 // return true or false
-function checkRowCol(row) {
+function checkWinCondition() {
+  let symCurr = gridArray[index].innerHTML;
+  let col1, col2;
 
-}
-
-// function to check diagonal for win condidtion
-// return true or false
-function checkDiag(diag) {
-
-}
-
-function checkWinOrLoseWinOrLose(button) {
-  switch(button) {
+  switch (index) {
+    case 0:
     case 1:
-      if (checkRowCol(1) && checkDiag(1)) {
-
-      }
-    
     case 2:
-      if (checkRowCol(2)) {
-        
-      }
+      col1 = gridArray[down()].innerHTML;
+      col2 = gridArray[down2()].innerHTML;
+        if (symCurr === col1 === col2) {
+          return true;
+        }
+      break;
 
     case 3:
-      if (checkRowCol(3) && checkDiag(3)) {
-        
-      }
-
     case 4:
-      if (checkRowCol(4)) {
-        
-      }
-
     case 5:
-      if (checkRowCol(5) && checkDiag(5)) {
-        
-      }
-    
+      col1 = gridArray[down()].innerHTML;
+      col2 = gridArray[up()].innerHTML;
+        if (symCurr === col1 === col2) {
+          return true;
+        }
+      break;
+
     case 6:
-      if (checkRowCol(6)) {
-        
-      }
-
     case 7:
-      if (checkRowCol(7) && checkDiag(7)) {
-        
-      }
-
     case 8:
-      if (checkRowCol(8)) {
-        
-      }
+      col1 = gridArray[up()].innerHTML;
+      col2 = gridArray[up2()].innerHTML;
+        if (symCurr === col1 === col2) {
+          return true;
+        }
+      break;
+      
+    default:
+      return 'error';
+      break;
+  }
 
-    case 9:
-      if (checkRowCol(9) && checkDiag(9)) {
-        
-      }
-  };
+  let row1, row2;
+
+  switch (index) {
+    case 0:
+    case 3:
+    case 6:
+      row1 = gridArray[right()].innerHTML;
+      row2 = gridArray[right2()].innerHTML;
+        if (symCurr === row1 === row2) {
+          return true;
+        }
+      break;
+
+    case 1:
+    case 4:
+    case 7:
+      row1 = gridArray[left()].innerHTML;
+      row2 = gridArray[right()].innerHTML;
+        if (symCurr === row1 === row2) {
+          return true;
+        }
+      break;
+
+    case 2:
+    case 5:
+    case 8:
+      row1 = gridArray[left()].innerHTML;
+      row2 = gridArray[left2()].innerHTML;
+        if (symCurr === row1 === row2) {
+          return true;
+        }
+      break;
+      
+    default:
+      return 'error';
+      break;
+  }
+
+  return false;
 }
 
+// function to display X or O
+function displaySymbol() {
+  if (gridArray[index].innerHTML === '') {
+    turn % 2 === 0 ? gridArray[index].innerHTML = PLAYER1 
+    : gridArray[index].innerHTML = PLAYER2;
+  
+    checkWinCondition();
+    turn++;
+  }
+}
 
-btn1.addEventListener('click', () => {
-  displaySymbol(btn1);
-  checkWinOrLose(0);
-});
-btn2.addEventListener('click', () => {
-  displaySymbol(btn2);
-  checkWinOrLose(1);
-});
-btn3.addEventListener('click', () => {
-  displaySymbol(btn3);
-  checkWinOrLose(2);
-});
-
-btn4.addEventListener('click', () => {
-  displaySymbol(btn4);
-  checkWinOrLose(3);
-});
-btn5.addEventListener('click', () => {
-  displaySymbol(btn5);
-  checkWinOrLose(4);
-});
-btn6.addEventListener('click', () => {
-  displaySymbol(btn6);
-  checkWinOrLose(5);
-});
-
-btn7.addEventListener('click', () => {
-  displaySymbol(btn7);
-  checkWinOrLose(6);
-});
-btn8.addEventListener('click', () => {
-  displaySymbol(btn8);
-  checkWinOrLose(7);
-});
-btn9.addEventListener('click', () => {
-  displaySymbol(btn9);
-  checkWinOrLose(8);
+// add event listener for each button
+gridArray.forEach((element, i) => {
+  element.addEventListener('click', () => {
+    index = i;
+    displaySymbol();
+  })
 });
