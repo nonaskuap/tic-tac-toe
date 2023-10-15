@@ -21,7 +21,13 @@ body {
 }
 
 .btn {
+  vertical-align:top;
+  font-size: 200px;
   height: 200px;
   width: 200px;
   cursor: pointer;
+}
+
+.displayWinner {
+  display: none;
 }
