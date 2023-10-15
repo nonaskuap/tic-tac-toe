@@ -1,5 +1,6 @@
-const player1 = 'X', player2 = 'O';
+const PLAYER1 = 'X', PLAYER2 = 'O';
 let turn = 0;
+let winner = '';
 
 const btn1 = document.querySelector('#btn1');
 const btn2 = document.querySelector('#btn2');
@@ -15,8 +16,8 @@ const btn9 = document.querySelector('#btn9');
 
 // function to display X or O
 function displaySymbol(button) {
-  turn % 2 === 0 ? button.innerHTML = player1 
-    : button.innerHTML = player2;
+  turn % 2 === 0 ? button.innerHTML = PLAYER1 
+    : button.innerHTML = PLAYER2;
   
   turn++;
 }
@@ -39,7 +40,6 @@ function checkWinOrLoseWinOrLose(button) {
       if (checkRowCol(1) && checkDiag(1)) {
 
       }
-      
     
     case 2:
       if (checkRowCol(2)) {
